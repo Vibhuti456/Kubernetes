@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-resources
+  namespace: notes
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - http:
+        paths:
+         - pathType: Prefix
+           path: /nginx
+           backend:
+             service:
+               name: nginx-service-pod
+               port:
+                 number: 80
+         - pathType: Prefix
+           path: /
+           backend:
+             service:
+               name: django-svc
+               port:
+                 number: 8000
